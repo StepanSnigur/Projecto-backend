@@ -1,16 +1,19 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const authRouter = require('./routers/authRouter')
+const boardRouter = require('./routers/boardRouter')
+require('dotenv').config()
 
 const app = express()
 const PORT = process.env.PORT || 5000
 
 app.use(express.json())
 app.use('/auth', authRouter)
+app.use('/board', boardRouter)
 
 const startServer = async () => {
   try {
-    await mongoose.connect(`mongodb+srv://ProjectoCreator:My*f5SKQr@C6Xjh@cluster0.8wtc9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
+    await mongoose.connect(`mongodb+srv://ProjectoCreator:${process.env.DB_PASSWORD}@cluster0.8wtc9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true
