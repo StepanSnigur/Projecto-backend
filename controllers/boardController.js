@@ -163,6 +163,46 @@ class BoardController {
       res.status(400).json({ message: 'Что-то пошло не так' })
     }
   }
+
+  async getBoard(req, res) {
+    try {
+      const { boardId } = req.body
+      const board = await Board.findById(boardId)
+      res.json(board)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
+
+  async saveBoardSettings(req, res) {
+    try {
+      const { boardId, newSettings } = req.body
+
+      const board = await Board.findById(boardId)
+      board.settings = newSettings
+      await board.save()
+      res.json(newSettings)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
+
+  async deleteBoardMember(req, res) {
+    try {
+      const { boardId, memberId } = req.body
+
+      const board = await Board.findById(boardId)
+      board.assignedUsers = board.assignedUsers.filter(user => user.userId !== memberId)
+      await authController.removeBoardFromUser(req, mockResolve)
+      await board.save()
+      res.json(board.assignedUsers)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
 }
 
 module.exports = new BoardController()

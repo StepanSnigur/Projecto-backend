@@ -96,6 +96,20 @@ class AuthController {
       res.status(400).json({ message: 'Непредвиденная ошибка' })
     }
   }
+
+  async removeBoardFromUser(req, res) {
+    try {
+      const { boardId, memberId } = req.body
+
+      const user = await User.findById(memberId)
+      user.registeredInBoards = user.registeredInBoards.filter(board => board.boardId !== boardId)
+      await user.save()
+      res.json(user.registeredInBoards)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Непредвиденная ошибка' })
+    }
+  }
 }
 
 module.exports = new AuthController()
