@@ -90,6 +90,7 @@ class AuthController {
       user.registeredInBoards.push(userBoard)
       await user.save()
       res.json(user.registeredInBoards)
+      return user.registeredInBoards
     } catch (e) {
       console.error(e)
       res.status(400).json({ message: 'Непредвиденная ошибка' })

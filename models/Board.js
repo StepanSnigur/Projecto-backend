@@ -8,13 +8,15 @@ const Board = new Schema({
     name: String,
     tasks: [{
       createdAt: String,
-      name: String
+      name: String,
+      description: String
     }]
   }],
   settings: {
     isPrivate: { type: String, default: 'false' },
     comments: { type: String, default: 'disabled' }
-  }
+  },
+  name: String
 })
 
 module.exports = model('Board', Board)

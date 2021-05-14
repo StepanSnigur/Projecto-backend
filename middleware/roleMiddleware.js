@@ -9,8 +9,8 @@ module.exports = (roles) => function(req, res, next) {
     if (!token) return res.status(403).json({ message: 'Пользователь не авторизован' })
 
     const { userBoards } = jwt.verify(token, secret)
-    const reqBoard = req.board
-    const userRoleInBoard = userBoards.find(board => board.id === reqBoard.id).role
+    const { boardId } = req.body
+    const userRoleInBoard = userBoards.find(board => board.boardId === boardId).role
     const hasAccess = roles.includes(userRoleInBoard)
     if (!hasAccess) return res.status(403).json({ message: 'У вас нет доступа' })
     next()
