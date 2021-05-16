@@ -10,6 +10,12 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use('/auth', authRouter)
 app.use('/board', boardRouter)
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader("Access-Control-Allow-Methods", "*")
+  res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept')
+  next()
+})
 
 const startServer = async () => {
   try {
