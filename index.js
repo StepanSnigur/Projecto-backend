@@ -12,6 +12,7 @@ app.use(express.json())
 app.use('/auth', authRouter)
 app.use('/board', boardRouter)
 app.use(cors())
+app.options('*', cors())
 
 const startServer = async () => {
   try {
