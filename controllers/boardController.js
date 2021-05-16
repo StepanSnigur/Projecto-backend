@@ -16,7 +16,7 @@ class BoardController {
       const { name, members, backgroundImage } = req.body
       const candidate = await Board.findOne({ name })
       if (candidate) {
-        return res.json({ message: 'Таблица с таким именем уже существует' })
+        return res.status(400).json({ message: 'Таблица с таким именем уже существует' })
       }
       
       const board = new Board({
