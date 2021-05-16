@@ -4,7 +4,7 @@ const roleMiddleware = require('../middleware/roleMiddleware')
 const boardController = require('../controllers/boardController')
 const router = new Router()
 
-router.get('/', boardController.getBoard)
+router.post('/', boardController.getBoard)
 router.post('/create', authMiddleware, boardController.createBoard)
 router.post('/createList', authMiddleware, boardController.createList)
 router.post('/createTask', authMiddleware, boardController.createTask)

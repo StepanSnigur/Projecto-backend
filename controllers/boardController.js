@@ -168,6 +168,10 @@ class BoardController {
     try {
       const { boardId } = req.body
       const board = await Board.findById(boardId)
+      if (!board) {
+        return res.status(400).json({ message: 'Такой доски не существует' })
+      }
+
       res.json(board)
     } catch (e) {
       console.error(e)
