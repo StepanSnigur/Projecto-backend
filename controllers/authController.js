@@ -54,7 +54,10 @@ class AuthController {
       }
 
       const token = generateAccessToken(user._id, user.registeredInBoards)
-      return res.json({ token })
+      return res.json({
+        token,
+        user
+      })
     } catch (e) {
       console.error(e)
       res.status(400).json({ message: 'Ошибка входа' })
