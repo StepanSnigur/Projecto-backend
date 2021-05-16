@@ -11,8 +11,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use('/auth', authRouter)
 app.use('/board', boardRouter)
-app.use(cors())
-app.options('*', cors())
+app.use(cors({ origin: true }))
 
 const startServer = async () => {
   try {
