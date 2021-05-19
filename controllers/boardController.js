@@ -74,7 +74,7 @@ class BoardController {
 
   async addUser(req, res) {
     try {
-      const { boardId, userId, name } = req.body
+      const { boardId, userId, name, role } = req.body
 
       const board = await Board.findById(boardId)
       const userInBoard = board.assignedUsers.some(user => user.userId === userId)
@@ -84,7 +84,8 @@ class BoardController {
 
       const newBoardMember = {
         userId,
-        name
+        name,
+        role
       }
       board.assignedUsers.push(newBoardMember)
       await board.save()

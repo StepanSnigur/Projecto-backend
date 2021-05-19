@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose')
 
 const Board = new Schema({
   actions: [],
-  assignedUsers: [{ userId: String, name: String }],
+  assignedUsers: [{ userId: String, name: String, role: String }],
   backgroundImage: { type: String, default: '' },
   lists: [{
     name: String,
