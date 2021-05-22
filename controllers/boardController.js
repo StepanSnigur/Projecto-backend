@@ -26,6 +26,15 @@ class BoardController {
         backgroundImage,
         lists: []
       })
+      members.forEach(async member => {
+        await authController.addBoardToUser({
+          body: {
+            boardId: board._id,
+            role: member.role,
+            userId: member._id
+          }
+        }, mockResolve)
+      })
       await board.save()
       res.json(board)
     } catch (e) {
