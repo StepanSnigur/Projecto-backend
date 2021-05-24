@@ -162,8 +162,8 @@ class BoardController {
       const { boardId, listId, taskId, newTitle, newDescription } = req.body
 
       const board = await Board.findById(boardId)
-      const listToChange = board.list.find(list => list._id.toString() === listId)
-      const taskToChange = listToChange.find(task => task._id.toString() === taskId)
+      const listToChange = board.lists.find(list => list._id.toString() === listId)
+      const taskToChange = listToChange.tasks.find(task => task._id.toString() === taskId)
       taskToChange.name = newTitle
       taskToChange.description = newDescription
       await board.save()
