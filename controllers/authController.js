@@ -87,7 +87,8 @@ class AuthController {
 
       const userBoard = {
         boardId: boardId,
-        role
+        role,
+        isPinned: false
       }
       user.registeredInBoards.push(userBoard)
       await user.save()
