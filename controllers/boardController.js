@@ -217,6 +217,21 @@ class BoardController {
       res.status(400).json({ message: 'Что-то пошло не так' })
     }
   }
+
+  async pinBoard(req, res) {
+    try {
+      const { userId, boardId, isPinned } = req.body
+
+      const user = await User.findById(userId)
+      const board = user.registeredInBoards.find(board => board.boardId === boardId)
+      board.isPinned = isPinned
+      await user.save()
+      res.json(user.registeredInBoards)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
 }
 
 module.exports = new BoardController()
