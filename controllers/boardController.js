@@ -232,6 +232,25 @@ class BoardController {
       res.status(400).json({ message: 'Что-то пошло не так' })
     }
   }
+
+  async deleteBoard(req, res) {
+    try {
+      const { boardId } = req.body
+
+      const board = await Board.findById(boardId)
+      board.assignedUsers.forEach(async ({ userId }) => {
+        req.body.memberId = userId
+        await authController.removeBoardFromUser(req, mockResolve)
+      })
+      await Board.deleteOne({
+        _id: boardId
+      })
+      res.json({ msg: 'deleted' })
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
 }
 
 module.exports = new BoardController()

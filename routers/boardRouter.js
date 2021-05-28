@@ -16,5 +16,6 @@ router.post('/changeTaskData', authMiddleware, boardController.changeTaskData)
 router.post('/setBoardSettings', authMiddleware, roleMiddleware('ADMIN'), boardController.saveBoardSettings)
 router.post('/deleteMember', authMiddleware, boardController.deleteBoardMember)
 router.post('/pin', authMiddleware, boardController.pinBoard)
+router.post('/delete', authMiddleware, roleMiddleware('ADMIN'), boardController.deleteBoard)
 
 module.exports = router
