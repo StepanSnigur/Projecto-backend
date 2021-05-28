@@ -103,7 +103,6 @@ class AuthController {
   async removeBoardFromUser(req, res) {
     try {
       const { boardId, memberId } = req.body
-
       const user = await User.findById(memberId)
       user.registeredInBoards = user.registeredInBoards.filter(board => board.boardId !== boardId)
       await user.save()

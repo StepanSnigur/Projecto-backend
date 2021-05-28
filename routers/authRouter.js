@@ -13,5 +13,6 @@ router.post('/registration', [
 router.post('/login', authController.login)
 router.get('/user', authMiddleware, authController.getUser)
 router.post('/addBoard', authController.addBoardToUser)
+router.post('/removeBoard', authMiddleware, authController.removeBoardFromUser)
 
 module.exports = router
