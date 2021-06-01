@@ -251,6 +251,40 @@ class BoardController {
       res.status(400).json({ message: 'Что-то пошло не так' })
     }
   }
+
+  async moveTask(req, res) {
+    try {
+      const { boardId, source, destination } = req.body
+
+      const board = await Board.findById(boardId)
+      const dragFromListIndex = board.lists.findIndex(list => list._id.toString() === source.droppableId)
+      const dragToListIndex = board.lists.findIndex(list => list._id.toString() === destination.droppableId)
+      const taskToMove = board.lists[dragFromListIndex].tasks[source.index]
+      board.lists[dragFromListIndex].tasks = board.lists[dragFromListIndex].tasks.filter((_, i) => i !== source.index)
+      board.lists[dragToListIndex].tasks.splice(destination.index, 0, taskToMove)
+      await board.save()
+      res.json(board.lists)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
+  async moveColumn(req, res) {
+    try {
+      const { boardId, source, destination } = req.body
+      const sourceId = source.index
+      const destinationId = destination.index
+
+      const board = await Board.findById(boardId)
+      const listToMove = board.lists.splice(sourceId, 1)[0]
+      board.lists.splice(destinationId, 0, listToMove)
+      await board.save()
+      res.json(board.lists)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
 }
 
 module.exports = new BoardController()
