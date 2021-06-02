@@ -285,6 +285,28 @@ class BoardController {
       res.status(400).json({ message: 'Что-то пошло не так' })
     }
   }
+
+  async addAction(req, res) {
+    try {
+      const { boardId, action } = req.body
+      delete req.body.__v
+      action._id = mongoose.Types.ObjectId()
+
+      const board = await Board.findById(boardId)
+      await Board.updateOne(
+        { _id: boardId },
+        {
+          $set: {
+            actions: [action, ...board.actions]
+          }
+        }
+      )
+      res.json(action)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
 }
 
 module.exports = new BoardController()
