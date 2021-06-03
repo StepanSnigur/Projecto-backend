@@ -297,7 +297,9 @@ class BoardController {
         { _id: boardId },
         {
           $set: {
-            actions: [action, ...board.actions]
+            actions: board.actions.length >= 100
+              ? [action, ...board.actions.slice(0, board.actions.length - 1)]
+              : [action, ...board.actions]
           }
         }
       )
