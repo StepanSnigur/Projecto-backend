@@ -70,10 +70,13 @@ class BoardController {
       const newTask = {
         _id: mongoose.Types.ObjectId(),
         name: taskName,
-        createdAt
+        createdAt,
+        completed: false
       }
+      console.log(newTask)
       board.lists.find(list => list._id.toString() === listId).tasks.push(newTask)
       await board.save()
+      console.log(board.lists.find(list => list._id.toString() === listId).tasks)
       return res.json(newTask)
     } catch (e) {
       console.error(e)
@@ -304,6 +307,22 @@ class BoardController {
         }
       )
       res.json(action)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
+
+  async changeTaskStatus(req, res) {
+    try {
+      const { boardId, listId, taskId, isCompleted } = req.body
+
+      const board = await Board.findById(boardId)
+      const list = board.lists.find(list => list._id.toString() === listId)
+      const task = list.tasks.find(task => task._id.toString() === taskId)
+      task.completed = isCompleted
+      await board.save()
+      res.json(task)
     } catch (e) {
       console.error(e)
       res.status(400).json({ message: 'Что-то пошло не так' })

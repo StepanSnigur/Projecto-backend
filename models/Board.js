@@ -9,7 +9,8 @@ const Board = new Schema({
     tasks: [{
       createdAt: String,
       name: String,
-      description: String
+      description: String,
+      completed: Boolean
     }]
   }],
   settings: {

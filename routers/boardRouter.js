@@ -20,5 +20,6 @@ router.post('/delete', authMiddleware, roleMiddleware('ADMIN'), boardController.
 router.post('/move/task', authMiddleware, boardController.moveTask)
 router.post('/move/column', authMiddleware, boardController.moveColumn)
 router.post('/addAction', authMiddleware, boardController.addAction)
+router.post('/changeTaskStatus', authMiddleware, boardController.changeTaskStatus)
 
 module.exports = router
