@@ -21,5 +21,7 @@ router.post('/move/task', authMiddleware, boardController.moveTask)
 router.post('/move/column', authMiddleware, boardController.moveColumn)
 router.post('/addAction', authMiddleware, boardController.addAction)
 router.post('/changeTaskStatus', authMiddleware, boardController.changeTaskStatus)
+router.post('/getChatMessages', authMiddleware, boardController.getChatMessages)
+router.post('/sendChatMessage', authMiddleware, boardController.sendChatMessage)
 
 module.exports = router

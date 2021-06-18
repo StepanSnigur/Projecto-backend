@@ -17,6 +17,9 @@ const Board = new Schema({
     isPrivate: { type: String, default: 'false' },
     comments: { type: String, default: 'disabled' }
   },
+  chat: {
+    messages: [{ sender: String, sendedAt: String, content: String }]
+  },
   name: String
 })
 

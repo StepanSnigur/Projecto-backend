@@ -24,7 +24,10 @@ class BoardController {
         actions: [],
         assignedUsers: members,
         backgroundImage,
-        lists: []
+        lists: [],
+        chat: {
+          messages: []
+        }
       })
       members.forEach(async member => {
         await authController.addBoardToUser({
@@ -323,6 +326,33 @@ class BoardController {
       task.completed = isCompleted
       await board.save()
       res.json(task)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
+
+  async getChatMessages(req, res) {
+    try {
+      const { boardId } = req.body
+
+      const board = await Board.findById(boardId)
+      res.json(board.chat.messages)
+    } catch (e) {
+      console.error(e)
+      res.status(400).json({ message: 'Что-то пошло не так' })
+    }
+  }
+
+  async sendChatMessage(req, res) {
+    try {
+      const { boardId, message } = req.body
+      message._id = mongoose.Types.ObjectId()
+
+      const board = await Board.findById(boardId)
+      board.chat.messages.push(message)
+      await board.save()
+      res.json(message)
     } catch (e) {
       console.error(e)
       res.status(400).json({ message: 'Что-то пошло не так' })
