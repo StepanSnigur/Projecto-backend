@@ -2,13 +2,7 @@ const mongoose = require('mongoose')
 const Board = require('../models/Board')
 const User = require('../models/User')
 const authController = require('./authController')
-
-const mockResolve = {
-  status: () => ({
-    json: () => {}
-  }),
-  json: () => {}
-}
+const { mockResolve } = require('../utils')
 
 class BoardController {
   async createBoard(req, res) {
@@ -353,6 +347,7 @@ class BoardController {
       board.chat.messages.push(message)
       await board.save()
       res.json(message)
+      return message
     } catch (e) {
       console.error(e)
       res.status(400).json({ message: 'Что-то пошло не так' })
