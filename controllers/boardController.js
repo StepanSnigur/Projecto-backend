@@ -191,10 +191,12 @@ class BoardController {
 
   async saveBoardSettings(req, res) {
     try {
-      const { boardId, newSettings } = req.body
+      const { boardId, newSettings, newBackground } = req.body
 
       const board = await Board.findById(boardId)
       board.settings = newSettings
+      if (newBackground) board.backgroundImage = newBackground
+
       await board.save()
       res.json(newSettings)
     } catch (e) {
