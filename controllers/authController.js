@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Role = require('../models/Role')
 
-const generateAccessToken = (id, userBoards) => {
-  const payload = { id, userBoards }
+const generateAccessToken = (id) => {
+  const payload = { id }
   return jwt.sign(payload, process.env.SECRET_JWT_KEY, { expiresIn: '12h' })
 }
 
@@ -53,7 +53,7 @@ class AuthController {
         return res.status(400).json({ message: 'Неверный email или пароль' })
       }
 
-      const token = generateAccessToken(user._id, user.registeredInBoards)
+      const token = generateAccessToken(user._id)
       return res.json({
         token,
         user
